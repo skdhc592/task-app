@@ -1,0 +1,118 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
+import { deleteTask, isOverdue, loadTasks, Task, TaskStatus, updateTask } from "@/lib/tasks";
+
+const statusOptions: TaskStatus[] = ["TODO", "DOING", "DONE"];
+
+export default function TasksPage() {
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [filter, setFilter] = useState<"ALL" | TaskStatus>("ALL");
+
+  useEffect(() => {
+    setTasks(loadTasks());
+  }, []);
+
+  const filtered = useMemo(() => {
+    if (filter === "ALL") return tasks;
+    return tasks.filter((t) => t.status === filter);
+  }, [tasks, filter]);
+
+  function refresh() {
+    setTasks(loadTasks());
+  }
+
+  function onDelete(id: string) {
+    if (!confirm("削除しますか？")) return;
+    deleteTask(id);
+    refresh();
+  }
+
+  function cycleStatus(t: Task) {
+    const idx = statusOptions.indexOf(t.status);
+    const next = statusOptions[(idx + 1) % statusOptions.length];
+    updateTask(t.id, { status: next });
+    refresh();
+  }
+
+  function downloadCsv() {
+    const header = ["id", "title", "description", "assignee", "dueDate", "status", "createdAt", "updatedAt"];
+    const rows = filtered.map((t) =>
+      [
+        t.id,
+        t.title,
+        t.description,
+        t.assignee,
+        t.dueDate || "",
+        t.status,
+        t.createdAt,
+        t.updatedAt,
+      ].map((value) => `"${String(value ?? "").replace(/"/g, '""')}"`).join(","),
+    );
+    const csv = [header.join(","), ...rows].join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "tasks.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  return (
+    <main style={{ padding: 24, fontFamily: "system-ui" }}>
+      <div style={{ display: "flex", gap: 12, alignItems: "center", justifyContent: "space-between" }}>
+        <h1 style={{ fontSize: 24 }}>Tasks</h1>
+        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+          <button onClick={downloadCsv} style={{ border: "1px solid #444", padding: "8px 12px", borderRadius: 10 }}>
+            CSV出力
+          </button>
+          <Link href="/tasks/new" style={{ border: "1px solid #444", padding: "8px 12px", borderRadius: 10, textDecoration: "none" }}>
+            + New
+          </Link>
+        </div>
+      </div>
+
+      <div style={{ marginTop: 12, display: "flex", gap: 10, alignItems: "center" }}>
+        <label>Filter:</label>
+        <select value={filter} onChange={(e) => setFilter(e.target.value as any)} style={{ padding: 6 }}>
+          <option value="ALL">ALL</option>
+          <option value="TODO">TODO</option>
+          <option value="DOING">DOING</option>
+          <option value="DONE">DONE</option>
+        </select>
+        <button onClick={refresh} style={{ padding: "6px 10px" }}>Refresh</button>
+      </div>
+
+      <div style={{ marginTop: 16, display: "grid", gap: 10 }}>
+        {filtered.length === 0 && <p>まだタスクがありません。Newから作ってください。</p>}
+
+        {filtered.map((t) => (
+          <div key={t.id} style={{ border: "1px solid #333", borderRadius: 12, padding: 12 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
+              <div style={{ minWidth: 0 }}>
+                <div style={{ fontWeight: 700, fontSize: 16, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                  {t.title}
+                  {isOverdue(t) && <span style={{ marginLeft: 8, fontWeight: 700 }}>(期限切れ)</span>}
+                </div>
+                <div style={{ opacity: 0.8, marginTop: 4 }}>
+                  担当: {t.assignee || "-"} / 期限: {t.dueDate || "-"} / Status: {t.status}
+                </div>
+                {t.description && <div style={{ marginTop: 6, opacity: 0.9 }}>{t.description}</div>}
+              </div>
+
+              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                <button onClick={() => cycleStatus(t)} style={{ padding: "6px 10px" }}>Status→</button>
+                <Link href={`/tasks/${t.id}/edit`} style={{ padding: "6px 10px", border: "1px solid #444", borderRadius: 10, textDecoration: "none" }}>
+                  Edit
+                </Link>
+                <button onClick={() => onDelete(t.id)} style={{ padding: "6px 10px" }}>Delete</button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </main>
+  );
+}
