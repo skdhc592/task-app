@@ -6,3 +6,10 @@ node_modules/
 dev.db
 *.db
 
+
+# env
+.env
+# prisma local db
+prisma/dev.db
+prisma/*.db
+
