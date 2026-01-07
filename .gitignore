@@ -1,3 +1,8 @@
 node_modules/
 .next/
 .env
+
+# Local database
+dev.db
+*.db
+
