@@ -11,6 +11,7 @@
   --text-secondary: #86868b;
   --gap: 1.2rem;
   --gap-sm: 0.7rem;
+  --gap-xs: 0.35rem;
   --page-padding-pc: 40px;
   --page-padding-sp: 12px;
   --card-padding-pc: 24px;
@@ -75,7 +76,9 @@ button:disabled {
 /* ========================
   入力欄・セレクト・テキストエリア
 =========================== */
-input, textarea, select {
+input,
+textarea,
+select {
   transition: all 0.2s ease;
   border-radius: var(--form-control-radius);
   width: 100%;
@@ -95,7 +98,9 @@ input[type="radio"] {
   padding: 0;
 }
 
-input:focus, textarea:focus, select:focus {
+input:focus,
+textarea:focus,
+select:focus {
   outline: none;
   border-color: #007AFF !important;
   box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
@@ -138,8 +143,15 @@ input:focus, textarea:focus, select:focus {
   .filter-group,
   .button-row {
     flex-wrap: wrap;
-    gap: var(--gap-sm);
-    row-gap: 0.5rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--gap-xs);
+    row-gap: var(--gap-xs);
+    width: 100%;
+  }
+  .button-row > * {
+    width: 100%;
+    box-sizing: border-box;
   }
 }
 
@@ -161,6 +173,7 @@ input:focus, textarea:focus, select:focus {
     align-items: stretch;
     gap: 0.3em;
     margin-bottom: 0.5em;
+    width: 100%;
   }
   .form-row label,
   .filter-item label {
@@ -191,6 +204,12 @@ input:focus, textarea:focus, select:focus {
     gap: 0.65rem;
     padding: var(--card-padding-sp);
     margin-bottom: 0.8rem;
+    width: 100%;
+  }
+  /* 子要素も100%幅に */
+  .task-card > * {
+    width: 100%;
+    box-sizing: border-box;
   }
 }
 
@@ -214,6 +233,11 @@ input:focus, textarea:focus, select:focus {
     flex-direction: column;
     gap: 0.35em;
     font-size: 0.98em;
+    width: 100%;
+  }
+  .task-meta-row > * {
+    width: 100%;
+    box-sizing: border-box;
   }
 }
 
