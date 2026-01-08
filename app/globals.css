@@ -17,15 +17,24 @@
   --card-padding-pc: 24px;
   --card-padding-sp: 12px;
   --form-control-radius: 8px;
+  --mobile-card-gap: 0.88rem;
+  --mobile-card-padding: 0.95rem;
 }
 
 /* ========================
   ベース
 =========================== */
+html, body {
+  box-sizing: border-box;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
+  box-sizing: inherit;
+  max-width: 100%;
 }
 
 body {
@@ -36,11 +45,69 @@ body {
   padding: var(--page-padding-pc);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-width: 0;
 }
 
 @media (max-width: 600px) {
   body {
     padding: var(--page-padding-sp);
+  }
+}
+
+/* ========================
+  ヘッダー（タスク管理タイトル＋ボタン）
+=========================== */
+.app-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  gap: var(--gap);
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+
+.header-title {
+  font-size: 1.38rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 0;
+  flex: 0 0 auto;
+  word-break: break-word;
+  max-width: 100%;
+}
+
+.header-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 0.8rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+  .app-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.1rem;
+    margin-bottom: 1.2rem;
+  }
+  .header-title {
+    font-size: 1.15rem;
+    margin-bottom: 0.4rem;
+    width: 100%;
+  }
+  .header-actions {
+    width: 100%;
+    gap: 0.65rem;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+  .header-actions > * {
+    flex: 1 1 48%;
+    min-width: 0;
+    max-width: 100%;
   }
 }
 
@@ -55,6 +122,15 @@ a {
 button,
 a {
   font-size: 1rem;
+}
+
+button,
+a {
+  min-width: 44px;
+  min-height: 38px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: none;
 }
 
 button:hover:not(:disabled),
@@ -89,6 +165,7 @@ select {
   background: #fff;
   box-sizing: border-box;
   min-width: 0;
+  appearance: none;
 }
 
 input[type="checkbox"],
@@ -114,6 +191,7 @@ select:focus {
     max-width: 100%;
   }
 }
+
 @media (max-width: 600px) {
   .form-row input,
   .form-row select,
@@ -126,32 +204,57 @@ select:focus {
 }
 
 /* ========================
-  レスポンシブ: ツールバー・フィルター・ボタン行
+  フィルター&検索系のレイアウト/はみ出し防止
 =========================== */
-.toolbar,
 .filter-group,
+.toolbar,
 .button-row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--gap);
   row-gap: var(--gap-sm);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 @media (max-width: 600px) {
-  .toolbar,
   .filter-group,
+  .toolbar,
   .button-row {
-    flex-wrap: wrap;
     flex-direction: column;
     align-items: stretch;
     gap: var(--gap-xs);
-    row-gap: var(--gap-xs);
-    width: 100%;
+    row-gap: 0.5rem;
   }
+  .filter-group > * ,
+  .toolbar > *,
   .button-row > * {
     width: 100%;
+    min-width: 0;
+    max-width: 100%;
     box-sizing: border-box;
+  }
+}
+
+.filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+  max-width: 100%;
+}
+@media (max-width: 600px) {
+  .filter-buttons {
+    width: 100%;
+    gap: var(--gap-xs);
+  }
+  .filter-buttons > * {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
   }
 }
 
@@ -164,6 +267,9 @@ select:focus {
   align-items: center;
   gap: 0.7em;
   margin-bottom: 0.5em;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 @media (max-width: 600px) {
@@ -174,20 +280,23 @@ select:focus {
     gap: 0.3em;
     margin-bottom: 0.5em;
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
   }
   .form-row label,
   .filter-item label {
     margin-bottom: 0.1em;
+    font-weight: 500;
   }
 }
 
 /* ========================
-  タスクカード（要素の縦並び／余白/見やすさ）
+  タスクカード（要素の縦並び／余白/見やすさ/はみ出し修正）
 =========================== */
 .task-card {
   background: var(--card-bg);
-  box-shadow: var(--card-shadow);
-  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.08), 0 1.5px 8px rgba(0,0,0,0.03);
+  border-radius: 14px;
   padding: var(--card-padding-pc);
   margin-bottom: 1.3rem;
   display: flex;
@@ -196,20 +305,34 @@ select:focus {
   align-items: flex-start;
   border: 1px solid var(--border);
   min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (max-width: 600px) {
   .task-card {
     flex-direction: column;
-    gap: 0.65rem;
-    padding: var(--card-padding-sp);
-    margin-bottom: 0.8rem;
+    gap: var(--mobile-card-gap);
+    padding: var(--mobile-card-padding);
+    margin-bottom: 1rem;
     width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
   }
-  /* 子要素も100%幅に */
+  /* 子要素全てを幅いっぱい */
   .task-card > * {
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
     box-sizing: border-box;
+  }
+  /* ステータスと選択肢の重なり解消 */
+  .task-card .task-actions {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.6rem !important;
+    width: 100%;
   }
 }
 
@@ -220,24 +343,62 @@ select:focus {
   word-break: break-word;
 }
 
+@media (max-width: 600px) {
+  .task-title {
+    font-size: 1.06rem;
+    margin-bottom: 0.15em;
+  }
+}
+
 .task-meta-row {
   display: flex;
   flex-wrap: wrap;
   gap: 1.1em;
   font-size: 0.97em;
   color: var(--text-secondary);
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
 }
 
 @media (max-width: 600px) {
   .task-meta-row {
     flex-direction: column;
-    gap: 0.35em;
-    font-size: 0.98em;
+    gap: 0.25em;
+    font-size: 0.99em;
     width: 100%;
+    min-width: 0;
+    max-width: 100vw;
   }
   .task-meta-row > * {
     width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+}
+
+/* タスクカード内のアクション行（編集/ステータス/削除ボタン） */
+.task-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 0.55em;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+}
+@media (max-width: 600px) {
+  .task-actions {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.65em;
+    width: 100%;
+    max-width: 100%;
+  }
+  .task-actions > * {
+    width: 100%;
     box-sizing: border-box;
+    min-width: 0;
+    max-width: 100%;
   }
 }
 
@@ -255,6 +416,7 @@ select:focus {
   margin-bottom: 0.15em;
   vertical-align: middle;
   line-height: 1.2;
+  box-shadow: 0 0.5px 3px rgba(0,0,0,0.06);
 }
 
 @media (max-width: 600px) {
@@ -263,17 +425,21 @@ select:focus {
     margin-bottom: 0.25em;
     margin-right: 0.33em;
     font-size: 0.99em;
+    min-width: 0;
+    max-width: 100%;
   }
 }
 
 /* ========================
-  テーブルやリスト（幅調整用）
+  テーブルやリスト（幅調整用/はみ出し防止）
 =========================== */
 .responsive-table,
 .table-responsive {
   width: 100%;
   overflow-x: auto;
   display: block;
+  max-width: 100vw;
+  box-sizing: border-box;
 }
 
 /* ========================
@@ -282,3 +448,18 @@ select:focus {
 
 .gap-lg { gap: var(--gap); }
 .gap-sm { gap: var(--gap-sm); }
+.gap-xs { gap: var(--gap-xs); }
+
+@media (max-width: 600px) {
+  .gap-lg { gap: var(--gap-sm); }
+}
+
+/* スクロール・はみ出し防止（全般） */
+.no-scroll-x, .no-x-overflow {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+}
+
+/* 美しい角丸影デザインを下敷きに（Tailwind相当） */
+.rounded-lg { border-radius: 12px !important; }
+.shadow-sm { box-shadow: 0 1.5px 6px rgba(0,0,0,0.10), 0 1.5px 8px rgba(0,0,0,0.03) !important; }
