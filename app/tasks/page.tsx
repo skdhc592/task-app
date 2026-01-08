@@ -4,11 +4,12 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { deleteTask, loadTasks, Task, TaskStatus, updateTask } from "@/lib/tasks";
 
+// sort の型に "DUE_DESC" を追加、初期値は"CREATED_DESC"のまま
 export default function TasksPage() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [filter, setFilter] = useState<"ALL" | TaskStatus>("ALL");
   const [query, setQuery] = useState("");
-  const [sort, setSort] = useState<"CREATED_DESC" | "DUE_ASC" | "DUE_SOON">("CREATED_DESC");
+  const [sort, setSort] = useState<"CREATED_DESC" | "DUE_DESC" | "DUE_SOON">("CREATED_DESC");
   const [busyId, setBusyId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -25,8 +26,9 @@ export default function TasksPage() {
       }
       const aDue = a.dueDate || "9999-12-31";
       const bDue = b.dueDate || "9999-12-31";
-      if (sort === "DUE_ASC") {
-        return aDue.localeCompare(bDue);
+      if (sort === "DUE_DESC") {
+        // 期限が遅い順（降順）: 日付が遠いものが上、近いものが下
+        return bDue.localeCompare(aDue);
       }
       const today = new Date().toISOString().slice(0, 10);
       const aOver = aDue < today;
@@ -210,7 +212,7 @@ export default function TasksPage() {
           >
             <option value="CREATED_DESC">新着順</option>
             <option value="DUE_SOON">期限が近い順</option>
-            <option value="DUE_ASC">期限順（早い→遅い）</option>
+            <option value="DUE_DESC">期限が遅い順</option>
           </select>
         </div>
 
