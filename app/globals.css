@@ -25,25 +25,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* 防止ボタンのはみ出し。親コンテナにこのクラスを使用 */
-.button-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-/* 幅自動対応: スマホでは100%、PCでは適切な幅 */
-.responsive-width {
-  width: 100%;
-  max-width: 100%;
-}
-@media (min-width: 640px) {
-  .responsive-width {
-    width: auto;
-    max-width: 320px;
-  }
-}
-
 button, a {
   transition: all 0.2s ease;
 }
@@ -71,9 +52,3 @@ input:focus, textarea:focus, select:focus {
   border-color: #007AFF !important;
   box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
 }
-
-/* 
-期限のソート条件を降順にする例 (実装例 - CSSには直接書けません)
-JS例:
-array.sort((a, b) => b.due - a.due); 
-*/
