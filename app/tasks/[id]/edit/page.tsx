@@ -63,7 +63,7 @@ export default function EditTaskPage() {
   return (
     <main style={{ minHeight: "100vh", background: "#f5f5f7", padding: "32px 24px" }}>
       <div style={{ maxWidth: "640px", margin: "0 auto" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "32px" }}>
+        <div className="form-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "32px" }}>
           <h1 style={{ fontSize: "32px", fontWeight: 700, color: "#1d1d1f", margin: 0 }}>タスク編集</h1>
           <Link
             href="/tasks"
@@ -131,7 +131,7 @@ export default function EditTaskPage() {
             />
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+          <div className="form-row-grid">
             <div>
               <label style={{ display: "block", fontSize: "14px", fontWeight: 500, color: "#1d1d1f", marginBottom: "8px" }}>
                 担当
@@ -146,6 +146,7 @@ export default function EditTaskPage() {
                   border: "1px solid #e5e5e7",
                   fontSize: "14px",
                   fontFamily: "inherit",
+                  boxSizing: "border-box",
                 }}
               />
             </div>
@@ -164,6 +165,7 @@ export default function EditTaskPage() {
                   border: "1px solid #e5e5e7",
                   fontSize: "14px",
                   fontFamily: "inherit",
+                  boxSizing: "border-box",
                 }}
               />
             </div>
