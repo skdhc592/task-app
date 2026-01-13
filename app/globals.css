@@ -625,6 +625,37 @@ input[type="date"] {
 }
 
 /* ========================
+  カレンダー: レスポンシブ対応
+=========================== */
+.task-calendar {
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .task-calendar {
+    padding: 16px !important;
+  }
+  
+  .task-calendar h2 {
+    font-size: 16px !important;
+  }
+  
+  .task-calendar > div:first-child {
+    margin-bottom: 16px !important;
+  }
+  
+  /* カレンダーグリッドの日付セルを小さく */
+  .task-calendar > div:last-child > div {
+    min-height: 50px !important;
+    padding: 2px !important;
+  }
+  
+  .task-calendar > div:last-child > div > span {
+    font-size: 12px !important;
+  }
+}
+
+/* ========================
   その他
 =========================== */
 .gap-lg { gap: var(--gap); }

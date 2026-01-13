@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { deleteTask, loadTasks, Task, TaskStatus, updateTask } from "@/lib/tasks";
+import TaskCalendar from "./components/TaskCalendar";
 
 // sort の型に "DUE_DESC" を追加、初期値は"CREATED_DESC"のまま
 export default function TasksPage() {
@@ -137,6 +138,11 @@ export default function TasksPage() {
               + 新規作成
             </Link>
           </div>
+        </div>
+
+        {/* カレンダー */}
+        <div style={{ marginBottom: "24px" }}>
+          <TaskCalendar tasks={tasks} />
         </div>
 
         {/* フィルター・検索・ソート */}
