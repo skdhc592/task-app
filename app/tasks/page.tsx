@@ -217,35 +217,27 @@ export default function TasksPage() {
         </div>
 
         {/* タスク一覧 */}
-        <div style={{ display: "grid", gap: "16px" }}>
-          {filtered.length === 0 && (
-            <div
-              style={{
-                background: "#ffffff",
-                padding: "48px",
-                borderRadius: "12px",
-                boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
-                textAlign: "center",
-                color: "#86868b",
-              }}
-            >
-              タスクがありません。新規作成から追加してください。
-            </div>
-          )}
+        {filtered.length === 0 && (
+          <div
+            style={{
+              background: "#ffffff",
+              padding: "48px",
+              borderRadius: "12px",
+              boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
+              textAlign: "center",
+              color: "#86868b",
+            }}
+          >
+            タスクがありません。新規作成から追加してください。
+          </div>
+        )}
 
+        {/* モバイル（sm以下）: カード型表示 */}
+        <div className="tasks-card-view">
           {filtered.map((t) => {
             const badge = getDueBadge(t);
             return (
-              <div
-                key={t.id}
-                style={{
-                  background: "#ffffff",
-                  padding: "20px",
-                  borderRadius: "12px",
-                  boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
-                  transition: "all 0.2s ease",
-                }}
-              >
+              <div key={t.id} className="task-item-card">
                 <div style={{ display: "flex", justifyContent: "space-between", gap: "16px", alignItems: "flex-start" }}>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: "flex", gap: "12px", alignItems: "center", marginBottom: "8px" }}>
@@ -289,7 +281,7 @@ export default function TasksPage() {
                       </span>
                     </div>
                   </div>
-                  <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                  <div style={{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap" }}>
                     <Link
                       href={`/tasks/${t.id}/edit`}
                       style={{
@@ -344,6 +336,125 @@ export default function TasksPage() {
               </div>
             );
           })}
+        </div>
+
+        {/* PC（md以上）: テーブル表示 */}
+        <div className="tasks-table-view">
+          <table>
+            <thead>
+              <tr>
+                <th>タイトル</th>
+                <th>説明</th>
+                <th>担当</th>
+                <th>期限</th>
+                <th>ステータス</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filtered.map((t) => {
+                const badge = getDueBadge(t);
+                return (
+                  <tr key={t.id}>
+                    <td>
+                      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                        <span style={{ fontWeight: 600, color: "#1d1d1f" }}>{t.title}</span>
+                        {badge && (
+                          <span
+                            style={{
+                              padding: "4px 12px",
+                              borderRadius: "12px",
+                              fontSize: "12px",
+                              fontWeight: 500,
+                              color: badge.color,
+                              background: badge.bg,
+                              whiteSpace: "nowrap",
+                            }}
+                          >
+                            {badge.text}
+                          </span>
+                        )}
+                      </div>
+                    </td>
+                    <td style={{ color: "#86868b", maxWidth: "300px" }}>
+                      <div style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                        {t.description || "-"}
+                      </div>
+                    </td>
+                    <td style={{ color: "#86868b" }}>{t.assignee || "-"}</td>
+                    <td style={{ color: "#86868b" }}>{t.dueDate || "-"}</td>
+                    <td>
+                      <span
+                        style={{
+                          padding: "4px 12px",
+                          borderRadius: "6px",
+                          background: t.status === "DONE" ? "#e8f5e9" : t.status === "DOING" ? "#e3f2fd" : "#f5f5f7",
+                          color: t.status === "DONE" ? "#2e7d32" : t.status === "DOING" ? "#1976d2" : "#86868b",
+                          fontWeight: 500,
+                          fontSize: "13px",
+                        }}
+                      >
+                        {t.status}
+                      </span>
+                    </td>
+                    <td>
+                      <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                        <Link
+                          href={`/tasks/${t.id}/edit`}
+                          style={{
+                            padding: "6px 12px",
+                            background: "#f5f5f7",
+                            color: "#1d1d1f",
+                            borderRadius: "6px",
+                            textDecoration: "none",
+                            fontSize: "12px",
+                            fontWeight: 500,
+                            transition: "all 0.2s ease",
+                          }}
+                        >
+                          編集
+                        </Link>
+                        <select
+                          value={t.status}
+                          onChange={(e) => setStatus(t.id, e.target.value as TaskStatus)}
+                          disabled={busyId === t.id}
+                          style={{
+                            padding: "6px 10px",
+                            borderRadius: "6px",
+                            border: "1px solid #e5e5e7",
+                            background: "#ffffff",
+                            fontSize: "12px",
+                            cursor: "pointer",
+                          }}
+                        >
+                          <option value="TODO">TODO</option>
+                          <option value="DOING">DOING</option>
+                          <option value="DONE">DONE</option>
+                        </select>
+                        <button
+                          onClick={() => onDelete(t.id)}
+                          disabled={busyId === t.id}
+                          style={{
+                            padding: "6px 12px",
+                            background: "#ffebee",
+                            color: "#c62828",
+                            border: "none",
+                            borderRadius: "6px",
+                            fontSize: "12px",
+                            fontWeight: 500,
+                            cursor: "pointer",
+                            transition: "all 0.2s ease",
+                          }}
+                        >
+                          削除
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </div>
     </main>
