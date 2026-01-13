@@ -103,8 +103,8 @@ export default function NewTaskPage() {
             />
           </div>
 
-          <div className="form-row-grid">
-            <div>
+          <div className="form-row-grid" style={{ width: "100%", maxWidth: "100%", boxSizing: "border-box" }}>
+            <div style={{ width: "100%", maxWidth: "100%", boxSizing: "border-box", minWidth: 0 }}>
               <label style={{ display: "block", fontSize: "14px", fontWeight: 500, color: "#1d1d1f", marginBottom: "8px" }}>
                 担当
               </label>
@@ -113,17 +113,19 @@ export default function NewTaskPage() {
                 onChange={(e) => setAssignee(e.target.value)}
                 style={{
                   width: "100%",
+                  maxWidth: "100%",
                   padding: "12px 16px",
                   borderRadius: "8px",
                   border: "1px solid #e5e5e7",
                   fontSize: "14px",
                   fontFamily: "inherit",
                   boxSizing: "border-box",
+                  minWidth: 0,
                 }}
                 placeholder="例: 山田太郎"
               />
             </div>
-            <div>
+            <div style={{ width: "100%", maxWidth: "100%", boxSizing: "border-box", minWidth: 0 }}>
               <label style={{ display: "block", fontSize: "14px", fontWeight: 500, color: "#1d1d1f", marginBottom: "8px" }}>
                 期限
               </label>
@@ -133,12 +135,14 @@ export default function NewTaskPage() {
                 onChange={(e) => setDueDate(e.target.value)}
                 style={{
                   width: "100%",
+                  maxWidth: "100%",
                   padding: "12px 16px",
                   borderRadius: "8px",
                   border: "1px solid #e5e5e7",
                   fontSize: "14px",
                   fontFamily: "inherit",
                   boxSizing: "border-box",
+                  minWidth: 0,
                 }}
               />
             </div>
