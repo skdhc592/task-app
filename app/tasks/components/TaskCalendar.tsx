@@ -65,16 +65,17 @@ export default function TaskCalendar({ tasks }: Props) {
     }, {} as Record<TaskStatus, number>);
 
     return (
-      <div style={{ display: "flex", gap: "3px", justifyContent: "center", marginTop: "4px", flexWrap: "wrap" }}>
+      <div style={{ display: "flex", gap: "2px", justifyContent: "center", marginTop: "2px", flexWrap: "wrap", maxWidth: "100%", overflow: "hidden" }}>
         {Object.entries(statusCounts).map(([status, count]) => (
           <div
             key={status}
             style={{
-              width: count > 1 ? "8px" : "6px",
-              height: count > 1 ? "8px" : "6px",
+              width: count > 1 ? "6px" : "5px",
+              height: count > 1 ? "6px" : "5px",
               borderRadius: "50%",
               backgroundColor: getStatusColor(status as TaskStatus),
               opacity: 0.8,
+              flexShrink: 0,
             }}
             title={`${status}: ${count}件`}
           />
@@ -167,10 +168,10 @@ export default function TaskCalendar({ tasks }: Props) {
       </div>
 
       {/* カレンダーグリッド */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: "4px" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: "4px", width: "100%", boxSizing: "border-box" }}>
         {/* 空白セル（月の最初の日までの空白） */}
         {Array.from({ length: startingDayOfWeek }).map((_, index) => (
-          <div key={`empty-${index}`} style={{ aspectRatio: "1", minHeight: "60px" }} />
+          <div key={`empty-${index}`} style={{ aspectRatio: "1", minHeight: "60px", width: "100%", maxWidth: "100%", boxSizing: "border-box" }} />
         ))}
 
         {/* 日付セル */}
@@ -185,6 +186,8 @@ export default function TaskCalendar({ tasks }: Props) {
               style={{
                 aspectRatio: "1",
                 minHeight: "60px",
+                width: "100%",
+                maxWidth: "100%",
                 border: today ? "2px solid #007AFF" : "1px solid #e5e5e7",
                 borderRadius: "8px",
                 padding: "4px",
@@ -195,10 +198,13 @@ export default function TaskCalendar({ tasks }: Props) {
                 background: today ? "#f0f7ff" : hasTasks ? "#fafafa" : "#ffffff",
                 cursor: hasTasks ? "pointer" : "default",
                 transition: "all 0.2s ease",
+                boxSizing: "border-box",
+                overflow: "hidden",
+                position: "relative",
               }}
               onMouseEnter={(e) => {
                 if (hasTasks) {
-                  e.currentTarget.style.transform = "scale(1.05)";
+                  e.currentTarget.style.transform = "scale(1.02)";
                   e.currentTarget.style.boxShadow = "0 2px 8px rgba(0, 0, 0, 0.1)";
                 }
               }}
@@ -212,6 +218,8 @@ export default function TaskCalendar({ tasks }: Props) {
                   fontSize: "14px",
                   fontWeight: today ? 700 : hasTasks ? 600 : 400,
                   color: today ? "#007AFF" : "#1d1d1f",
+                  lineHeight: "1.2",
+                  whiteSpace: "nowrap",
                 }}
               >
                 {date}
