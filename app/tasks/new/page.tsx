@@ -24,8 +24,8 @@ export default function NewTaskPage() {
   }
 
   return (
-    <main style={{ minHeight: "100vh", background: "#f5f5f7", padding: "32px 24px" }}>
-      <div style={{ maxWidth: "640px", margin: "0 auto" }}>
+    <main style={{ minHeight: "100vh", background: "#f5f5f7", padding: "32px 24px", boxSizing: "border-box" }}>
+      <div className="form-container" style={{ maxWidth: "640px", margin: "0 auto" }}>
         <div className="form-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "32px" }}>
           <h1 style={{ fontSize: "32px", fontWeight: 700, color: "#1d1d1f", margin: 0 }}>新規タスク作成</h1>
           <Link
@@ -53,6 +53,9 @@ export default function NewTaskPage() {
             boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
             display: "grid",
             gap: "24px",
+            boxSizing: "border-box",
+            width: "100%",
+            maxWidth: "100%",
           }}
         >
           <div>
@@ -70,6 +73,8 @@ export default function NewTaskPage() {
                 border: "1px solid #e5e5e7",
                 fontSize: "14px",
                 fontFamily: "inherit",
+                boxSizing: "border-box",
+                maxWidth: "100%",
               }}
               placeholder="例: 企画書作成"
             />
@@ -91,6 +96,8 @@ export default function NewTaskPage() {
                 fontFamily: "inherit",
                 minHeight: "100px",
                 resize: "vertical",
+                boxSizing: "border-box",
+                maxWidth: "100%",
               }}
               placeholder="タスクの詳細を入力..."
             />
@@ -153,6 +160,8 @@ export default function NewTaskPage() {
                 fontFamily: "inherit",
                 background: "#ffffff",
                 cursor: "pointer",
+                boxSizing: "border-box",
+                maxWidth: "100%",
               }}
             >
               <option value="TODO">TODO</option>

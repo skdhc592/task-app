@@ -54,15 +54,15 @@ export default function EditTaskPage() {
 
   if (loading) {
     return (
-      <main style={{ minHeight: "100vh", background: "#f5f5f7", padding: "32px 24px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <main style={{ minHeight: "100vh", background: "#f5f5f7", padding: "32px 24px", display: "flex", alignItems: "center", justifyContent: "center", boxSizing: "border-box" }}>
         <p style={{ color: "#86868b", fontSize: "16px" }}>読み込み中...</p>
       </main>
     );
   }
 
   return (
-    <main style={{ minHeight: "100vh", background: "#f5f5f7", padding: "32px 24px" }}>
-      <div style={{ maxWidth: "640px", margin: "0 auto" }}>
+    <main style={{ minHeight: "100vh", background: "#f5f5f7", padding: "32px 24px", boxSizing: "border-box" }}>
+      <div className="form-container" style={{ maxWidth: "640px", margin: "0 auto" }}>
         <div className="form-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "32px" }}>
           <h1 style={{ fontSize: "32px", fontWeight: 700, color: "#1d1d1f", margin: 0 }}>タスク編集</h1>
           <Link
@@ -90,6 +90,9 @@ export default function EditTaskPage() {
             boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
             display: "grid",
             gap: "24px",
+            boxSizing: "border-box",
+            width: "100%",
+            maxWidth: "100%",
           }}
         >
           <div>
@@ -107,6 +110,8 @@ export default function EditTaskPage() {
                 border: "1px solid #e5e5e7",
                 fontSize: "14px",
                 fontFamily: "inherit",
+                boxSizing: "border-box",
+                maxWidth: "100%",
               }}
             />
           </div>
@@ -127,6 +132,8 @@ export default function EditTaskPage() {
                 fontFamily: "inherit",
                 minHeight: "100px",
                 resize: "vertical",
+                boxSizing: "border-box",
+                maxWidth: "100%",
               }}
             />
           </div>
@@ -187,6 +194,8 @@ export default function EditTaskPage() {
                 fontFamily: "inherit",
                 background: "#ffffff",
                 cursor: "pointer",
+                boxSizing: "border-box",
+                maxWidth: "100%",
               }}
             >
               <option value="TODO">TODO</option>
