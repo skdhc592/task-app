@@ -6,6 +6,7 @@
     "dev": "next dev",
     "db:seed": "tsx prisma/seed.ts",
     "build": "next build",
+    "vercel-build": "next build",
     "start": "next start",
     "lint": "eslint"
   },
