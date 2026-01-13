@@ -168,8 +168,8 @@ export default function EditTaskPage() {
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
                 style={{
-                  width: "100%",
-                  maxWidth: "100%",
+                  width: "auto",
+                  maxWidth: "250px",
                   padding: "12px 16px",
                   borderRadius: "8px",
                   border: "1px solid #e5e5e7",

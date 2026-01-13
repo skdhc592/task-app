@@ -592,19 +592,26 @@ input:focus, textarea:focus, select:focus {
   
   /* 期限入力欄に特に強力なスタイル */
   input[type="date"] {
-    width: 100% !important;
-    max-width: 100% !important;
+    width: auto !important;
+    max-width: 250px !important;
     box-sizing: border-box !important;
     min-width: 0 !important;
     -webkit-appearance: none;
     -moz-appearance: textfield;
   }
+  
+  /* モバイルでは少し狭く */
+  @media (max-width: 480px) {
+    input[type="date"] {
+      max-width: 200px !important;
+    }
+  }
 }
 
 /* 期限入力欄のグローバルスタイル（全画面サイズ） */
 input[type="date"] {
-  width: 100% !important;
-  max-width: 100% !important;
+  width: auto !important;
+  max-width: 250px !important;
   box-sizing: border-box !important;
   min-width: 0 !important;
 }
