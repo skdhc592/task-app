@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Task, TaskStatus } from "@/lib/tasks";
 
@@ -177,42 +178,12 @@ export default function TaskCalendar({ tasks }: Props) {
         {/* 日付セル */}
         {Array.from({ length: daysInMonth }).map((_, index) => {
           const date = index + 1;
+          const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(date).padStart(2, "0")}`;
           const hasTasks = getTasksForDate(date).length > 0;
           const today = isToday(date);
 
-          return (
-            <div
-              key={date}
-              style={{
-                aspectRatio: "1",
-                minHeight: "60px",
-                width: "100%",
-                maxWidth: "100%",
-                border: today ? "2px solid #007AFF" : "1px solid #e5e5e7",
-                borderRadius: "8px",
-                padding: "4px",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "flex-start",
-                background: today ? "#f0f7ff" : hasTasks ? "#fafafa" : "#ffffff",
-                cursor: hasTasks ? "pointer" : "default",
-                transition: "all 0.2s ease",
-                boxSizing: "border-box",
-                overflow: "hidden",
-                position: "relative",
-              }}
-              onMouseEnter={(e) => {
-                if (hasTasks) {
-                  e.currentTarget.style.transform = "scale(1.02)";
-                  e.currentTarget.style.boxShadow = "0 2px 8px rgba(0, 0, 0, 0.1)";
-                }
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "scale(1)";
-                e.currentTarget.style.boxShadow = "none";
-              }}
-            >
+          const cellContent = (
+            <>
               <span
                 style={{
                   fontSize: "14px",
@@ -225,6 +196,65 @@ export default function TaskCalendar({ tasks }: Props) {
                 {date}
               </span>
               {renderDateDots(date)}
+            </>
+          );
+
+          const cellStyle: React.CSSProperties = {
+            aspectRatio: "1",
+            minHeight: "60px",
+            width: "100%",
+            maxWidth: "100%",
+            border: today ? "2px solid #007AFF" : "1px solid #e5e5e7",
+            borderRadius: "8px",
+            padding: "4px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            background: today ? "#f0f7ff" : hasTasks ? "#fafafa" : "#ffffff",
+            cursor: "pointer",
+            transition: "all 0.2s ease",
+            boxSizing: "border-box",
+            overflow: "hidden",
+            position: "relative",
+            textDecoration: "none",
+            color: "inherit",
+          };
+
+          if (hasTasks) {
+            return (
+              <Link
+                key={date}
+                href={`/tasks/date/${dateStr}`}
+                style={cellStyle}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "scale(1.02)";
+                  e.currentTarget.style.boxShadow = "0 2px 8px rgba(0, 0, 0, 0.1)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "scale(1)";
+                  e.currentTarget.style.boxShadow = "none";
+                }}
+              >
+                {cellContent}
+              </Link>
+            );
+          }
+
+          return (
+            <div
+              key={date}
+              style={cellStyle}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "scale(1.02)";
+                e.currentTarget.style.boxShadow = "0 2px 8px rgba(0, 0, 0, 0.1)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "scale(1)";
+                e.currentTarget.style.boxShadow = "none";
+              }}
+            >
+              {cellContent}
             </div>
           );
         })}
