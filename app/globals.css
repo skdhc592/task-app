@@ -1,21 +1,25 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap");
 
 :root {
-  --background: #f5f5f7;
-  --foreground: #1d1d1f;
-  --primary: #007AFF;
-  --primary-hover: #0051d5;
+  --background: #f9fafb; /* bg-gray-50 */
+  --foreground: #111827; /* text-gray-900 */
+  --primary: #3b82f6; /* blue-500 */
+  --primary-hover: #2563eb; /* blue-600 */
   --card-bg: #ffffff;
-  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --border: #e5e5e7;
-  --text-secondary: #86868b;
+  --card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); /* shadow-sm */
+  --card-shadow-hover: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+  --border: #e5e7eb; /* gray-200 */
+  --text-primary: #111827; /* text-gray-900 */
+  --text-secondary: #6b7280; /* text-gray-600 */
+  --text-tertiary: #9ca3af; /* text-gray-400 */
   --gap: 1.2rem;
   --gap-sm: 0.7rem;
   --page-padding-pc: 40px;
   --page-padding-sp: 12px;
   --card-padding-pc: 24px;
   --card-padding-sp: 12px;
-  --form-control-radius: 8px;
+  --form-control-radius: 12px; /* rounded-xl */
+  --badge-radius: 9999px; /* rounded-full */
 }
 
 /* ========================
@@ -29,12 +33,13 @@
 
 body {
   background: var(--background);
-  color: var(--foreground);
+  color: var(--text-primary);
   font-family: "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   margin: 0;
   padding: var(--page-padding-pc);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
 }
 
 @media (max-width: 600px) {
@@ -49,17 +54,12 @@ body {
 button,
 a {
   transition: all 0.2s ease;
-}
-
-button,
-a {
   font-size: 1rem;
 }
 
 button:hover:not(:disabled),
 a:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  box-shadow: var(--card-shadow-hover) !important;
 }
 
 button:active:not(:disabled),
@@ -70,6 +70,32 @@ a:active {
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* ステータスバッジ */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: var(--badge-radius);
+  white-space: nowrap;
+}
+
+.status-badge-todo {
+  background-color: #f3f4f6; /* gray-100 */
+  color: #6b7280; /* gray-600 */
+}
+
+.status-badge-doing {
+  background-color: #dbeafe; /* blue-100 */
+  color: #2563eb; /* blue-600 */
+}
+
+.status-badge-done {
+  background-color: #d1fae5; /* green-100 */
+  color: #059669; /* green-600 */
 }
 
 /* ========================
@@ -275,6 +301,11 @@ input:focus, textarea:focus, select:focus {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  border: 1px solid var(--border);
+}
+
+.tasks-card-view .task-item-card:hover {
+  box-shadow: var(--card-shadow-hover);
 }
 
 .tasks-card-view .task-item-card .task-header {
@@ -291,8 +322,8 @@ input:focus, textarea:focus, select:focus {
 
 .tasks-card-view .task-item-card .task-title {
   font-size: 16px;
-  font-weight: 700;
-  color: #1d1d1f;
+  font-weight: 600;
+  color: var(--text-primary);
   margin: 0;
   word-break: break-word;
   line-height: 1.4;
@@ -300,7 +331,7 @@ input:focus, textarea:focus, select:focus {
 
 .tasks-card-view .task-item-card .task-description {
   font-size: 14px;
-  color: #86868b;
+  color: var(--text-secondary);
   margin: 0;
   line-height: 1.5;
   word-break: break-word;
@@ -311,7 +342,7 @@ input:focus, textarea:focus, select:focus {
   flex-direction: column;
   gap: 6px;
   font-size: 13px;
-  color: #86868b;
+  color: var(--text-secondary);
 }
 
 .tasks-card-view .task-item-card .task-meta-item {
@@ -397,6 +428,7 @@ input:focus, textarea:focus, select:focus {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: var(--card-shadow);
+  border: 1px solid var(--border);
 }
 
 .tasks-table-view thead {
@@ -408,15 +440,16 @@ input:focus, textarea:focus, select:focus {
   text-align: left;
   font-weight: 600;
   font-size: 14px;
-  color: var(--foreground);
+  color: var(--text-primary);
   border-bottom: 2px solid var(--border);
+  background: #f9fafb;
 }
 
 .tasks-table-view td {
   padding: 16px;
   border-bottom: 1px solid var(--border);
   font-size: 14px;
-  color: var(--foreground);
+  color: var(--text-primary);
 }
 
 .tasks-table-view tbody tr:last-child td {
@@ -424,7 +457,7 @@ input:focus, textarea:focus, select:focus {
 }
 
 .tasks-table-view tbody tr:hover {
-  background: #f8f9fa;
+  background: #f9fafb;
 }
 
 @media (min-width: 768px) {
@@ -671,6 +704,24 @@ input[type="date"] {
   .task-calendar > div:nth-child(3) > div > span {
     font-size: 12px !important;
   }
+}
+
+/* ========================
+  ボタンスタイル
+=========================== */
+.btn-primary:hover {
+  background: var(--primary-hover) !important;
+  box-shadow: var(--card-shadow-hover) !important;
+}
+
+.btn-secondary:hover {
+  box-shadow: var(--card-shadow-hover) !important;
+  border-color: #d1d5db !important;
+}
+
+.btn-danger:hover {
+  background: #fecaca !important;
+  box-shadow: var(--card-shadow-hover) !important;
 }
 
 /* ========================

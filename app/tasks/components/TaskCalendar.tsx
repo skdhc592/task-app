@@ -112,7 +112,7 @@ export default function TaskCalendar({ tasks }: Props) {
   const dayNames = ["日", "月", "火", "水", "木", "金", "土"];
 
   return (
-    <div className="task-calendar" style={{ background: "#ffffff", borderRadius: "12px", padding: "20px", boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)" }}>
+    <div className="task-calendar" style={{ background: "#ffffff", borderRadius: "12px", padding: "20px", boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)", border: "1px solid #e5e7eb" }}>
       {/* ヘッダー */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
         <button

@@ -100,39 +100,43 @@ export default function TasksPage() {
   }
 
   return (
-    <main style={{ minHeight: "100vh", background: "#f5f5f7", padding: "16px 12px" }}>
+    <main style={{ minHeight: "100vh", background: "#f9fafb", padding: "16px 12px" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         {/* ヘッダー */}
         <div className="page-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
-          <h1 style={{ fontSize: "32px", fontWeight: 700, color: "#1d1d1f", margin: 0 }}>タスク管理</h1>
+          <h1 style={{ fontSize: "32px", fontWeight: 700, color: "#111827", margin: 0 }}>タスク管理</h1>
           <div className="page-header-actions" style={{ display: "flex", gap: "12px" }}>
             <button
               onClick={downloadCsv}
+              className="btn-secondary"
               style={{
                 padding: "10px 20px",
                 background: "#ffffff",
-                border: "1px solid #e5e5e7",
+                border: "1px solid #e5e7eb",
                 borderRadius: "12px",
-                color: "#1d1d1f",
+                color: "#111827",
                 fontSize: "14px",
                 fontWeight: 500,
                 cursor: "pointer",
-                boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
+                boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
+                transition: "all 0.2s ease",
               }}
             >
               CSV出力
             </button>
             <Link
               href="/tasks/new"
+              className="btn-primary"
               style={{
                 padding: "10px 20px",
-                background: "#007AFF",
+                background: "#3b82f6",
                 color: "#ffffff",
                 borderRadius: "12px",
                 textDecoration: "none",
                 fontSize: "14px",
                 fontWeight: 500,
-                boxShadow: "0 2px 8px rgba(0, 122, 255, 0.3)",
+                boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
+                transition: "all 0.2s ease",
               }}
             >
               + 新規作成
@@ -152,7 +156,7 @@ export default function TasksPage() {
             background: "#ffffff",
             padding: "20px",
             borderRadius: "12px",
-            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
+            boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
             marginBottom: "24px",
             display: "flex",
             flexWrap: "wrap",
@@ -272,23 +276,22 @@ export default function TasksPage() {
                   )}
                   <div className="task-meta">
                     <div className="task-meta-item">
-                      <span style={{ fontWeight: 500 }}>担当:</span>
-                      <span>{t.assignee || "-"}</span>
+                      <span style={{ fontWeight: 500, color: "#6b7280" }}>担当:</span>
+                      <span style={{ color: "#6b7280" }}>{t.assignee || "-"}</span>
                     </div>
                     <div className="task-meta-item">
-                      <span style={{ fontWeight: 500 }}>期限:</span>
-                      <span>{t.dueDate || "-"}</span>
+                      <span style={{ fontWeight: 500, color: "#6b7280" }}>期限:</span>
+                      <span style={{ color: "#6b7280" }}>{t.dueDate || "-"}</span>
                     </div>
                     <div className="task-meta-item">
-                      <span style={{ fontWeight: 500 }}>ステータス:</span>
+                      <span style={{ fontWeight: 500, color: "#6b7280" }}>ステータス:</span>
                       <span
+                        className={`status-badge status-badge-${t.status.toLowerCase()}`}
                         style={{
-                          padding: "4px 10px",
-                          borderRadius: "6px",
-                          background: t.status === "DONE" ? "#e8f5e9" : t.status === "DOING" ? "#e3f2fd" : "#f5f5f7",
-                          color: t.status === "DONE" ? "#2e7d32" : t.status === "DOING" ? "#1976d2" : "#86868b",
-                          fontWeight: 500,
+                          padding: "4px 12px",
+                          borderRadius: "9999px",
                           fontSize: "12px",
+                          fontWeight: 500,
                         }}
                       >
                         {t.status}
@@ -299,11 +302,13 @@ export default function TasksPage() {
                 <div className="task-actions">
                   <Link
                     href={`/tasks/${t.id}/edit`}
+                    className="btn-secondary"
                     style={{
-                      background: "#f5f5f7",
-                      color: "#1d1d1f",
+                      background: "#ffffff",
+                      color: "#111827",
                       textDecoration: "none",
                       fontWeight: 500,
+                      border: "1px solid #e5e7eb",
                       transition: "all 0.2s ease",
                     }}
                   >
@@ -314,9 +319,11 @@ export default function TasksPage() {
                     onChange={(e) => setStatus(t.id, e.target.value as TaskStatus)}
                     disabled={busyId === t.id}
                     style={{
-                      border: "1px solid #e5e5e7",
+                      border: "1px solid #e5e7eb",
                       background: "#ffffff",
                       cursor: "pointer",
+                      borderRadius: "8px",
+                      transition: "all 0.2s ease",
                     }}
                   >
                     <option value="TODO">TODO</option>
@@ -326,9 +333,10 @@ export default function TasksPage() {
                   <button
                     onClick={() => onDelete(t.id)}
                     disabled={busyId === t.id}
+                    className="btn-danger"
                     style={{
-                      background: "#ffebee",
-                      color: "#c62828",
+                      background: "#fee2e2",
+                      color: "#dc2626",
                       border: "none",
                       fontWeight: 500,
                       cursor: "pointer",
@@ -363,7 +371,7 @@ export default function TasksPage() {
                   <tr key={t.id}>
                     <td>
                       <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                        <span style={{ fontWeight: 600, color: "#1d1d1f" }}>{t.title}</span>
+                        <span style={{ fontWeight: 600, color: "#111827" }}>{t.title}</span>
                         {badge && (
                           <span
                             style={{
@@ -381,22 +389,21 @@ export default function TasksPage() {
                         )}
                       </div>
                     </td>
-                    <td style={{ color: "#86868b", maxWidth: "300px" }}>
+                    <td style={{ color: "#6b7280", maxWidth: "300px" }}>
                       <div style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                         {t.description || "-"}
                       </div>
                     </td>
-                    <td style={{ color: "#86868b" }}>{t.assignee || "-"}</td>
-                    <td style={{ color: "#86868b" }}>{t.dueDate || "-"}</td>
+                    <td style={{ color: "#6b7280" }}>{t.assignee || "-"}</td>
+                    <td style={{ color: "#6b7280" }}>{t.dueDate || "-"}</td>
                     <td>
                       <span
+                        className={`status-badge status-badge-${t.status.toLowerCase()}`}
                         style={{
                           padding: "4px 12px",
-                          borderRadius: "6px",
-                          background: t.status === "DONE" ? "#e8f5e9" : t.status === "DOING" ? "#e3f2fd" : "#f5f5f7",
-                          color: t.status === "DONE" ? "#2e7d32" : t.status === "DOING" ? "#1976d2" : "#86868b",
+                          borderRadius: "9999px",
+                          fontSize: "12px",
                           fontWeight: 500,
-                          fontSize: "13px",
                         }}
                       >
                         {t.status}

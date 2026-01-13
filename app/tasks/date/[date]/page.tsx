@@ -74,30 +74,32 @@ export default function DateTasksPage() {
   }
 
   return (
-    <main style={{ minHeight: "100vh", background: "#f5f5f7", padding: "16px 12px" }}>
+    <main style={{ minHeight: "100vh", background: "#f9fafb", padding: "16px 12px" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         {/* ヘッダー */}
         <div className="page-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
           <div>
-            <h1 style={{ fontSize: "32px", fontWeight: 700, color: "#1d1d1f", margin: "0 0 8px 0" }}>
+            <h1 style={{ fontSize: "32px", fontWeight: 700, color: "#111827", margin: "0 0 8px 0" }}>
               {formattedDate}のタスク
             </h1>
-            <p style={{ fontSize: "14px", color: "#86868b", margin: 0 }}>
+            <p style={{ fontSize: "14px", color: "#6b7280", margin: 0 }}>
               {dateTasks.length}件のタスク
             </p>
           </div>
           <Link
             href="/tasks"
+            className="btn-secondary"
             style={{
               padding: "10px 20px",
               background: "#ffffff",
-              border: "1px solid #e5e5e7",
+              border: "1px solid #e5e7eb",
               borderRadius: "12px",
-              color: "#1d1d1f",
+              color: "#111827",
               textDecoration: "none",
               fontSize: "14px",
               fontWeight: 500,
-              boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
+              boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
+              transition: "all 0.2s ease",
             }}
           >
             ← タスク一覧に戻る
@@ -151,23 +153,22 @@ export default function DateTasksPage() {
                   )}
                   <div className="task-meta">
                     <div className="task-meta-item">
-                      <span style={{ fontWeight: 500 }}>担当:</span>
-                      <span>{t.assignee || "-"}</span>
+                      <span style={{ fontWeight: 500, color: "#6b7280" }}>担当:</span>
+                      <span style={{ color: "#6b7280" }}>{t.assignee || "-"}</span>
                     </div>
                     <div className="task-meta-item">
-                      <span style={{ fontWeight: 500 }}>期限:</span>
-                      <span>{t.dueDate || "-"}</span>
+                      <span style={{ fontWeight: 500, color: "#6b7280" }}>期限:</span>
+                      <span style={{ color: "#6b7280" }}>{t.dueDate || "-"}</span>
                     </div>
                     <div className="task-meta-item">
-                      <span style={{ fontWeight: 500 }}>ステータス:</span>
+                      <span style={{ fontWeight: 500, color: "#6b7280" }}>ステータス:</span>
                       <span
+                        className={`status-badge status-badge-${t.status.toLowerCase()}`}
                         style={{
-                          padding: "4px 10px",
-                          borderRadius: "6px",
-                          background: t.status === "DONE" ? "#e8f5e9" : t.status === "DOING" ? "#e3f2fd" : "#f5f5f7",
-                          color: t.status === "DONE" ? "#2e7d32" : t.status === "DOING" ? "#1976d2" : "#86868b",
-                          fontWeight: 500,
+                          padding: "4px 12px",
+                          borderRadius: "9999px",
                           fontSize: "12px",
+                          fontWeight: 500,
                         }}
                       >
                         {t.status}
@@ -242,7 +243,7 @@ export default function DateTasksPage() {
                   <tr key={t.id}>
                     <td>
                       <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                        <span style={{ fontWeight: 600, color: "#1d1d1f" }}>{t.title}</span>
+                        <span style={{ fontWeight: 600, color: "#111827" }}>{t.title}</span>
                         {badge && (
                           <span
                             style={{
@@ -260,22 +261,21 @@ export default function DateTasksPage() {
                         )}
                       </div>
                     </td>
-                    <td style={{ color: "#86868b", maxWidth: "300px" }}>
+                    <td style={{ color: "#6b7280", maxWidth: "300px" }}>
                       <div style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                         {t.description || "-"}
                       </div>
                     </td>
-                    <td style={{ color: "#86868b" }}>{t.assignee || "-"}</td>
-                    <td style={{ color: "#86868b" }}>{t.dueDate || "-"}</td>
+                    <td style={{ color: "#6b7280" }}>{t.assignee || "-"}</td>
+                    <td style={{ color: "#6b7280" }}>{t.dueDate || "-"}</td>
                     <td>
                       <span
+                        className={`status-badge status-badge-${t.status.toLowerCase()}`}
                         style={{
                           padding: "4px 12px",
-                          borderRadius: "6px",
-                          background: t.status === "DONE" ? "#e8f5e9" : t.status === "DOING" ? "#e3f2fd" : "#f5f5f7",
-                          color: t.status === "DONE" ? "#2e7d32" : t.status === "DOING" ? "#1976d2" : "#86868b",
+                          borderRadius: "9999px",
+                          fontSize: "12px",
                           fontWeight: 500,
-                          fontSize: "13px",
                         }}
                       >
                         {t.status}

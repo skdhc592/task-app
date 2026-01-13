@@ -24,15 +24,16 @@ export default function NewTaskPage() {
   }
 
   return (
-    <main style={{ minHeight: "100vh", background: "#f5f5f7", padding: "32px 24px", boxSizing: "border-box" }}>
+    <main style={{ minHeight: "100vh", background: "#f9fafb", padding: "32px 24px", boxSizing: "border-box" }}>
       <div className="form-container" style={{ maxWidth: "640px", margin: "0 auto" }}>
         <div className="form-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "32px" }}>
-          <h1 style={{ fontSize: "32px", fontWeight: 700, color: "#1d1d1f", margin: 0 }}>新規タスク作成</h1>
+          <h1 style={{ fontSize: "32px", fontWeight: 700, color: "#111827", margin: 0 }}>新規タスク作成</h1>
           <Link
             href="/tasks"
+            className="btn-secondary"
             style={{
               padding: "8px 16px",
-              color: "#007AFF",
+              color: "#3b82f6",
               textDecoration: "none",
               fontSize: "14px",
               fontWeight: 500,
@@ -50,17 +51,18 @@ export default function NewTaskPage() {
             background: "#ffffff",
             padding: "32px",
             borderRadius: "12px",
-            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
+            boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
             display: "grid",
             gap: "24px",
             boxSizing: "border-box",
             width: "100%",
             maxWidth: "100%",
+            border: "1px solid #e5e7eb",
           }}
         >
           <div>
-            <label style={{ display: "block", fontSize: "14px", fontWeight: 500, color: "#1d1d1f", marginBottom: "8px" }}>
-              タイトル <span style={{ color: "#ff3b30" }}>*</span>
+            <label style={{ display: "block", fontSize: "14px", fontWeight: 500, color: "#111827", marginBottom: "8px" }}>
+              タイトル <span style={{ color: "#dc2626" }}>*</span>
             </label>
             <input
               value={title}
@@ -81,7 +83,7 @@ export default function NewTaskPage() {
           </div>
 
           <div>
-            <label style={{ display: "block", fontSize: "14px", fontWeight: 500, color: "#1d1d1f", marginBottom: "8px" }}>
+            <label style={{ display: "block", fontSize: "14px", fontWeight: 500, color: "#111827", marginBottom: "8px" }}>
               説明
             </label>
             <textarea
@@ -105,7 +107,7 @@ export default function NewTaskPage() {
 
           <div className="form-row-grid" style={{ width: "100%", maxWidth: "100%", boxSizing: "border-box" }}>
             <div style={{ width: "100%", maxWidth: "100%", boxSizing: "border-box", minWidth: 0 }}>
-              <label style={{ display: "block", fontSize: "14px", fontWeight: 500, color: "#1d1d1f", marginBottom: "8px" }}>
+              <label style={{ display: "block", fontSize: "14px", fontWeight: 500, color: "#111827", marginBottom: "8px" }}>
                 担当
               </label>
               <input
@@ -126,7 +128,7 @@ export default function NewTaskPage() {
               />
             </div>
             <div style={{ width: "100%", maxWidth: "100%", boxSizing: "border-box", minWidth: 0 }}>
-              <label style={{ display: "block", fontSize: "14px", fontWeight: 500, color: "#1d1d1f", marginBottom: "8px" }}>
+              <label style={{ display: "block", fontSize: "14px", fontWeight: 500, color: "#111827", marginBottom: "8px" }}>
                 期限
               </label>
               <input
@@ -149,7 +151,7 @@ export default function NewTaskPage() {
           </div>
 
           <div>
-            <label style={{ display: "block", fontSize: "14px", fontWeight: 500, color: "#1d1d1f", marginBottom: "8px" }}>
+            <label style={{ display: "block", fontSize: "14px", fontWeight: 500, color: "#111827", marginBottom: "8px" }}>
               ステータス
             </label>
             <select
@@ -177,17 +179,18 @@ export default function NewTaskPage() {
           <div style={{ display: "flex", gap: "12px", marginTop: "8px" }}>
             <button
               type="submit"
+              className="btn-primary"
               style={{
                 flex: 1,
                 padding: "14px 24px",
-                background: "#007AFF",
+                background: "#3b82f6",
                 color: "#ffffff",
                 border: "none",
                 borderRadius: "12px",
                 fontSize: "16px",
                 fontWeight: 500,
                 cursor: "pointer",
-                boxShadow: "0 2px 8px rgba(0, 122, 255, 0.3)",
+                boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
                 transition: "all 0.2s ease",
               }}
             >
@@ -195,15 +198,17 @@ export default function NewTaskPage() {
             </button>
             <Link
               href="/tasks"
+              className="btn-secondary"
               style={{
                 padding: "14px 24px",
-                background: "#f5f5f7",
-                color: "#1d1d1f",
+                background: "#ffffff",
+                color: "#111827",
                 textDecoration: "none",
                 borderRadius: "12px",
                 fontSize: "16px",
                 fontWeight: 500,
                 textAlign: "center",
+                border: "1px solid #e5e7eb",
                 transition: "all 0.2s ease",
               }}
             >
